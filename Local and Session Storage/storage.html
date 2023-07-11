@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" name="" id="productName" placeholder="Enter the product Name">
+    <input type="number" name="" id="productPrice" placeholder="Enter the product Price">
+    <button onclick="addToCart()">Add to cart</button>
+
+    <div id="output"></div>
+</body>
+
+
+<script>
+    function showCart() {
+        let cart = sessionStorage.getItem("cart")
+        // console.log(cart);
+        cart = JSON.parse(cart);
+        let output = document.getElementById('output')
+        if (cart == null || cart.length == 0) {
+            output.innerHTML = "<h1>No products are there in the cart</h1>"
+        }
+        else {
+            let table = "<table border='1'>";
+            table += "<tr><th>Product Name</th><th>Product Price</th></tr>"
+            for (let i = 0; i <= cart.length; i++) {
+                table += "<td>" + "<td>" + cart[i].name + "</td>" + "<td>" + cart[i].price + "</td>" + "</td>"
+            }
+            table += "</table>"
+            output.innerHTML = table;
+        }
+    }
+    function addToCart() {
+        let cart = sessionStorage.getItem("cart")
+
+        if (cart == null) {
+            cart = [];
+        }
+        else {
+            cart = JSON.parse(cart);
+        }
+
+        let productName = document.getElementById('productName').value
+        let productPrice = document.getElementById('productPrice').value
+
+        let product = {
+            name: productName,
+            price: productPrice
+        }
+
+        cart.push(product);
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+    }
+    showCart();
+</script>
+
+</html>
